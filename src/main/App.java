@@ -18,8 +18,10 @@ public class App {
         deck.shuffle();
         deck.printCards();*/
 
-        Game game = new Game();
+    /*    Game game = new Game();
         game.initializeGame();
-
+        game.printPlayerCards();*/
+        Card card = new Card(Suit.Heart, CardValue.EIGHT);
+        System.out.println(card.getCardValue().getValue());
     }
 }

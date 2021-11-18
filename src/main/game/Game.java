@@ -2,16 +2,18 @@ package game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Game {
-    private List<Player> players;
+    private final List<Player> players;
     private int numberOfPlayers;
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
 
     public Game() {
-        this.players = new ArrayList<Player>();
+        this.players = new ArrayList<>();
     }
 
     private void registerPlayer(Player player) throws PlayerAlreadyRegisteredException {
@@ -33,12 +35,12 @@ public class Game {
         return players.contains(player);
     }
 
-    private void configurePlayers(int numPlayers) throws PlayerAlreadyRegisteredException{
+    private void configurePlayers(int numPlayers){
         this.numberOfPlayers = numPlayers;
     }
 
     public List<String> takePlayerNames(){
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
 
         String name = scanner.nextLine();
         for(int i = 0; i < numberOfPlayers; i++){
@@ -59,27 +61,88 @@ public class Game {
         return numberOfPlayers;
     }
 
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+
+    public void printPlayerCards(){
+        for(Player player : players){
+            System.out.println(player.getName() + ": "+ player.getHand());
+        }
+    }
+
+    public void printTotalPointsPerPlayer(){
+        for(Player player : players){
+            System.out.println(player.getName() + ": "+ player.getPoints());
+        }
+    }
+
+    public void printTurnsPerPlayer(){
+        for(Player player : players){
+            System.out.println(player.getName() + ": " + player.getTurn());
+        }
+    }
+
+    public Boolean allPlayersStick(){
+       // for all players if all one player status is not stick -> return false
+        for(Player player : players){
+            if(Objects.equals(player.getTurn(), "stick")) return false;
+        }
+
+        System.out.println("RULE: All Players Stick in This Round");
+        return true;
+    }
+
+    public Boolean playerHit21(){
+        for(Player player : players){
+            if(player.getPoints() == 21)
+            {
+                System.out.println("RULE: A player hit exactly 21" + player);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public Boolean isGameOver() {
+        if(Boolean.TRUE.equals(this.playerHit21()))
+            return true;
+
+        if(players.size() == 1) {
+            System.out.println("RULE: Only One Player Left");
+            return true;
+        }
+
+        return Boolean.TRUE.equals(this.allPlayersStick());
+    }
+
     /**
      * Set up Players For the Game
      * @throws PlayerAlreadyRegisteredException
      */
-    public void initializeGame() throws PlayerAlreadyRegisteredException{
+    public void initializeGame() throws PlayerAlreadyRegisteredException, InterruptedException {
         System.out.println("BLACK JACK GAME HAS STARTED");
         System.out.print("Enter number of Players: ");
 
         int numPlayers = scanner.nextInt();
         System.out.println("Please wait for Game to Setup");
+        TimeUnit.SECONDS.sleep(2);
 
-        // configure number of players playing game
-        configurePlayers(numPlayers);
+        configurePlayers(numPlayers);   // configure number of players playing game
 
-        // take player names
-        List<String> names = this.takePlayerNames();
-        System.out.println(names);
+        List<String> names = this.takePlayerNames();   // take player names
 
-
-        // register players
-        this.registerPlayers(names);
+        this.registerPlayers(names);  // register players
+        System.out.println(" ");
+        System.out.println("The List of players playing the game are : ");
         this.printPlayers();
+
+    }
+
+    public void endGame(){
+
+
     }
 }

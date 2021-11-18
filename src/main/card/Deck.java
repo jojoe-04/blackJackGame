@@ -34,4 +34,11 @@ public class Deck {
         }
     }
 
+    public Card pop(){
+        Card last = cards.get(cards.size() - 1);
+        cards.remove(cards.size() - 1);
+        return last;
+    }
+
+
 }
