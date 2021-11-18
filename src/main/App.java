@@ -23,5 +23,6 @@ public class App {
         game.printPlayerCards();*/
         Card card = new Card(Suit.Heart, CardValue.EIGHT);
         System.out.println(card.getCardValue().getValue());
+        //System.out.println(card.getPoint());
     }
 }

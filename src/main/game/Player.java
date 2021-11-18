@@ -29,7 +29,7 @@ public class Player {
     }
 
     public int getPoints() {
-        this.caculatePoints();
+       this.caculatePoints();
         return points;
     }
 
@@ -38,9 +38,14 @@ public class Player {
     }
 
     public void calculateTurns() {
-        if(this.getPoints() < 17) turn = "hit";
-        if(this.getPoints() >= 17) {turn = "stick";}
-        if(this.getPoints() > 21) {turn = "bust";}
+        if(this.getPoints() < 17)
+            turn = "hit";
+
+        if(this.getPoints() >= 17)
+            turn = "stick";
+
+        if(this.getPoints() > 21)
+            turn = "bust";
     }
 
     public String getTurn() {
@@ -54,6 +59,7 @@ public class Player {
 
     // refactor to use stream
     public void caculatePoints(){
+        this.points = 0;
         for(Card c : this.hand){
             this.points += c.getCardValue().getValue();
         }

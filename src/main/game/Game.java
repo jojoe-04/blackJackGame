@@ -87,7 +87,7 @@ public class Game {
     public Boolean allPlayersStick(){
        // for all players if all one player status is not stick -> return false
         for(Player player : players){
-            if(Objects.equals(player.getTurn(), "stick")) return false;
+            if(!Objects.equals(player.getTurn(), "stick")) return false;
         }
 
         System.out.println("RULE: All Players Stick in This Round");

@@ -21,7 +21,9 @@ public class GamePlay {
         }
 
         System.out.println("GAME CONTINUE");
-        roundValue++; // incrmenet round
+        roundValue++; // increment round
+
+
 
 
         // a round is played
