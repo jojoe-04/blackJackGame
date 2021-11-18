@@ -42,4 +42,12 @@ public class Card implements Comparable<Card> {
     public int compareTo(Card other) {
         return this.cardValue.compareTo(other.cardValue);
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit=" + suit +
+                ", cardValue=" + cardValue +
+                '}';
+    }
 }
