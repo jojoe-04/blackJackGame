@@ -20,6 +20,7 @@ public class GamePlay {
             return;
         }
 
+        // game continue gots to stop
         System.out.println("GAME CONTINUE");
         roundValue++; // increment round
 
