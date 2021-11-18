@@ -1,13 +1,19 @@
 import card.Card;
 import card.CardValue;
+import card.Deck;
 import card.Suit;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class App {
+public class gApp {
 
     public static void main(String[] args) {
         System.out.println("Black Jack Game");
+
+        Card card = new Card(Suit.Heart, CardValue.EIGHT);
+        Deck deck = new Deck();
+        deck.printCards();
+
+        System.out.println(" ");
+        deck.shuffle();
+        deck.printCards();
     }
 }
