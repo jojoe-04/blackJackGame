@@ -53,7 +53,7 @@ public class Game {
         return names;
     }
 
-    //TODO refactor to use streams
+    //TODO refactor to use streamsss
     public void printPlayers() throws InterruptedException {
         for(Player player : players){
             TimeUnit.SECONDS.sleep(3);
@@ -61,6 +61,7 @@ public class Game {
         }
     }
 
+    // TODO REFACTOR
     public void ejectPlayer(Player player){
         players.remove(player);
     }
