@@ -9,7 +9,7 @@ import static java.lang.System.*;
  * The type Deck.
  */
 public class Deck {
-    private ArrayList<Card> cards;
+    private final ArrayList<Card> cards;
 
     /**
      * Instantiates a new Deck.
@@ -35,9 +35,7 @@ public class Deck {
      * Print cards.
      */
     public void printCards() {
-        for(Card card : cards) {
-           out.println(card) ;
-        }
+        cards.forEach(out::println);
     }
 
     /**
@@ -52,4 +50,7 @@ public class Deck {
     }
 
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
 }

@@ -13,7 +13,7 @@ public class GamePlay {
     private static int roundValue = 0;
     private static final Game blackjack1 = new Game();
 
-    //TODO refactor
+    //TODO refactor (naming convention)
     public static String aRound() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2);
         out.println("-------> GAME ROUND " + roundValue);
@@ -23,10 +23,12 @@ public class GamePlay {
             out.println(" ");
             out.println("------------ GAME OVER ----------\n\n");
 
+            // TODO seperate log logic
             TimeUnit.SECONDS.sleep(3);
             out.println("Players Left in the Game: ");
             blackjack1.printPlayers();
 
+            // TODO seperate log logic
             TimeUnit.SECONDS.sleep(3);
             out.println("\nWinner of Game is: ");
             out.println(blackjack1.findWinner());
@@ -86,6 +88,7 @@ public class GamePlay {
         out.println("Take a Look at your cards");
         blackjack1.printPlayerCards();
 
+        //TODO seperate logging
         TimeUnit.SECONDS.sleep(5);
         out.println(" ");
         out.println("These are your card totals");

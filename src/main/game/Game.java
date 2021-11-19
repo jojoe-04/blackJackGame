@@ -54,14 +54,15 @@ public class Game {
     }
 
     //TODO refactor to use streamsss
-//    public void printPlayers() throws InterruptedException {
-//        for(Player player : players){
-//            TimeUnit.SECONDS.sleep(3);
-//            out.println(player);
-//        }
-//    }
-
     public void printPlayers() throws InterruptedException {
+        for (Player player : players) {
+            TimeUnit.SECONDS.sleep(3);
+            out.println(player);
+        }
+    }
+
+    //TODO refactor catch
+  /*  public void printPlayers() {
         players.forEach(player -> {
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -70,7 +71,7 @@ public class Game {
                 e.printStackTrace();
             }
         });
-    }
+    }*/
 
     // TODO REFACTOR
     public void ejectPlayer(Player player){
@@ -85,34 +86,13 @@ public class Game {
         return players;
     }
 
-    //TODO refactor to use streams
-//    public void printPlayerCards(){
-//        for(Player player : players){
-//            out.println(player.getName() + ": "+ player.getHand());
-//        }
-//    }
-
     public void printPlayerCards(){
         players.forEach(player ->  out.println(player.getName() + ": "+ player.getHand()));
     }
 
-    //TODO refactor to use streams
-//    public void printTotalPointsPerPlayer(){
-//        for(Player player : players){
-//            out.println(player.getName() + ": "+ player.getPoints());
-//        }
-//    }
-
     public void printTotalPointsPerPlayer(){
         players.forEach(player -> out.println(player.getName() + ": "+ player.getPoints()));
     }
-
-    //TODO refactor to use streams
-//    public void printTurnsPerPlayer(){
-//        for(Player player : players){
-//            out.println(player.getName() + ": " + player.getTurn());
-//        }
-//    }
 
     public void printTurnsPerPlayer(){
         players.forEach(player -> out.println(player.getName() + ": " + player.getTurn()));
@@ -188,10 +168,8 @@ public class Game {
 
     }
 
-    // //TODO refactor to use Optional
     public Player findWinner() {
-        return players.stream().max(Comparator.comparing(Player::getPoints)).get();
-
+        Optional<Player> player = Optional.of(players.stream().max(Comparator.comparing(Player::getPoints))).get();
+        return player.orElseGet(() -> new Player("#####", "No Winner"));
     }
-
 }
