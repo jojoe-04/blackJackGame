@@ -143,13 +143,19 @@ public class Game {
 
     public int setUpNumberOfPlayers() {
             out.print("Enter number of Players: ");
-            int numPlayers = scanner.nextInt();
-            while (numPlayers  <= 0 || numPlayers >= 6) {
+            String numPlayers = scanner.nextLine();
+
+            if(Objects.equals(numPlayers, "")){
+                out.println("No Input was Entered! Default Number of Players: 3");
+                return 3;
+            }
+
+            while (Integer.parseInt(numPlayers)  <= 0 || Integer.parseInt(numPlayers ) >= 6) {
                 out.println("Wrong Input! Enter a number greater than 0 and lesser than 6");
                 out.print("Enter number of Players: ");
-                numPlayers = scanner.nextInt();
+                numPlayers = scanner.next();
             }
-            return numPlayers;
+            return Integer.parseInt(numPlayers);
     }
 
     public void addPlayersToGame() throws PlayerAlreadyRegisteredException {
