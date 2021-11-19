@@ -7,6 +7,9 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.*;
 
+/**
+ * The type Game play.
+ */
 public  class GamePlay {
     private static final Deck deck = new Deck();
     private static int roundValue = 0;
@@ -15,6 +18,12 @@ public  class GamePlay {
     private GamePlay() {
     }
 
+    /**
+     * Play round string.
+     *
+     * @return the string
+     * @throws InterruptedException the interrupted exception
+     */
     public static String playRound() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2);
         out.println("-------> GAME ROUND " + roundValue);
@@ -30,18 +39,21 @@ public  class GamePlay {
 
             return "over";
         }
-
         out.println("\n{log} < game continued.....>\n\n");
         roundValue++;
         return "continue";
     }
 
+    /**
+     * Continue game play.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public static void continueGamePlay() throws InterruptedException {
         String gameStatus = playRound();
         if("over".equals(gameStatus)) return; // don't continue when game is not over
 
         while("continue".equals(gameStatus)){
-
             TimeUnit.SECONDS.sleep(2);
             for (Player player : blackjack.getPlayers()) {
                 if (Objects.equals(player.getTurn(), "bust")) {
@@ -61,6 +73,12 @@ public  class GamePlay {
         }
     }
 
+    /**
+     * Hand cards.
+     *
+     * @param player     the player
+     * @param numOfCards the num of cards
+     */
     public static void handCards(Player player, int numOfCards){
         for(int i = 0; i < numOfCards; i++){
             player.addToHand(deck.pop());
@@ -92,6 +110,11 @@ public  class GamePlay {
         blackjack.printTurnsPerPlayer();
     }
 
+    /**
+     * Log game play.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public static void logGamePlay() throws InterruptedException {
         TimeUnit.SECONDS.sleep(1);
         logCards();
@@ -103,6 +126,12 @@ public  class GamePlay {
         logTurns();
     }
 
+    /**
+     * Start game play.
+     *
+     * @throws PlayerAlreadyRegisteredException the player already registered exception
+     * @throws InterruptedException             the interrupted exception
+     */
     public  static void startGamePlay() throws PlayerAlreadyRegisteredException, InterruptedException {
         blackjack.initializeGame(); // initialize the Game
 

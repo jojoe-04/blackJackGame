@@ -16,8 +16,10 @@ public class Player {
     private final List<Card> hand;
     private String turn;
     private String strategy = "normal";
+
     /**
      * Instantiates a new Player.
+     *
      * @param playerId the player id
      * @param name     the player name
      */
@@ -31,6 +33,7 @@ public class Player {
 
     /**
      * Add card to player hand list
+     *
      * @param card the card
      */
     public void addToHand(Card card) {
@@ -39,6 +42,7 @@ public class Player {
 
     /**
      * Gets hand list of player cards
+     *
      * @return the hand
      */
     public List<Card> getHand() {
@@ -55,6 +59,7 @@ public class Player {
 
     /**
      * Calculate points & Gets points.
+     *
      * @return the points
      */
     public int getPoints() {
@@ -71,15 +76,26 @@ public class Player {
         if(this.getPoints() > 21) turn = "bust";
     }
 
+    /**
+     * Calculate always hit.
+     */
     public void calculateAlwaysHit() {
         if(this.getPoints() < 21) turn = "hit";
         if(this.getPoints() > 21) turn = "bust";
     }
 
+    /**
+     * Calculate always stick.
+     */
     public void calculateAlwaysStick() {
         turn = "stick";
     }
 
+    /**
+     * Assign turns by strategy.
+     *
+     * @param action the action
+     */
     public void assignTurnsByStrategy(String action) {
         if(Objects.equals(action, "normal")){
             this.strategy = "normal";
@@ -98,6 +114,7 @@ public class Player {
 
     /**
      * Calculates turns and return player's turn
+     *
      * @return turn
      */
     public String getTurn() {
@@ -112,7 +129,6 @@ public class Player {
     public String getName() {
         return name;
     }
-
 
     @Override
     public String toString() {

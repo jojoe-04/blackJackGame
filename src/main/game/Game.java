@@ -6,26 +6,33 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.lang.System.*;
 
+/**
+ * The type Game.
+ */
 public class Game {
     private final List<Player> players;
     private int numberOfPlayers;
     private final Scanner scanner = new Scanner(in);
 
-
+    /**
+     * Instantiates a new Game.
+     */
     public Game() {
         this.players = new CopyOnWriteArrayList<>();
     }
 
-    //TODO refactor
     private void registerPlayer(Player player) throws PlayerAlreadyRegisteredException {
-
         if(this.isPlayerRegistered(player)) // check if player is not already registered
             throw new PlayerAlreadyRegisteredException();
-
         players.add(player);
     }
 
-    //TODO refactor
+    /**
+     * Register players.
+     *
+     * @param playerNames the player names
+     * @throws PlayerAlreadyRegisteredException the player already registered exception
+     */
     public void registerPlayers(List<String> playerNames) throws PlayerAlreadyRegisteredException {
         for(int i=0; i < playerNames.size(); i++){
             Player randomPlayer = new Player(("00"+ i),playerNames.get(i));
@@ -41,7 +48,11 @@ public class Game {
         this.numberOfPlayers = numPlayers;
     }
 
-    //TODO refactor to use streams and error handling
+    /**
+     * Take player names list.
+     *
+     * @return the list
+     */
     public List<String> takePlayerNames(){
         List<String> names = new ArrayList<>();
         String name = scanner.nextLine();
@@ -53,7 +64,11 @@ public class Game {
         return names;
     }
 
-    //TODO refactor to use streamsss
+    /**
+     * Print players.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void printPlayers() throws InterruptedException {
         for (Player player : players) {
             TimeUnit.SECONDS.sleep(1);
@@ -61,44 +76,59 @@ public class Game {
         }
     }
 
-    //TODO refactor catch
-  /*  public void printPlayers() {
-        players.forEach(player -> {
-            try {
-                TimeUnit.SECONDS.sleep(3);
-                out.println(player);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-    }*/
-
-    // TODO REFACTOR
+    /**
+     * Eject player.
+     *
+     * @param player the player
+     */
     public void ejectPlayer(Player player){
         players.remove(player);
     }
 
+    /**
+     * Gets number of players.
+     *
+     * @return the number of players
+     */
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    /**
+     * Gets players.
+     *
+     * @return the players
+     */
     public List<Player> getPlayers() {
         return players;
     }
 
+    /**
+     * Print player cards.
+     */
     public void printPlayerCards(){
         players.forEach(player ->  out.println(player.getName() + ": "+ player.getHand()));
     }
 
+    /**
+     * Print total points per player.
+     */
     public void printTotalPointsPerPlayer(){
         players.forEach(player -> out.println(player.getName() + ": "+ player.getPoints()));
     }
 
+    /**
+     * Print turns per player.
+     */
     public void printTurnsPerPlayer(){
         players.forEach(player -> out.println(player.getName() + ": " + player.getTurn()));
     }
 
-    //TODO refactor
+    /**
+     * All players stick boolean.
+     *
+     * @return the boolean
+     */
     public Boolean allPlayersStick(){
         for(Player player : players){
             if(!Objects.equals(player.getTurn(), "stick")) return false;
@@ -107,12 +137,14 @@ public class Game {
         return true;
     }
 
-
-    //TODO refactor
+    /**
+     * Player hit 21 boolean.
+     *
+     * @return the boolean
+     */
     public Boolean playerHit21(){
         for(Player player : players){
-            if(player.getPoints() == 21)
-            {
+            if(player.getPoints() == 21) {
                 out.println("RULE: A player hit exactly 21: \n" + player);
                 return true;
             }
@@ -120,7 +152,11 @@ public class Game {
         return false;
     }
 
-    //TODO refactor
+    /**
+     * Is game over boolean.
+     *
+     * @return the boolean
+     */
     public Boolean isGameOver() {
         if(Boolean.TRUE.equals(this.playerHit21()))
             return true;
@@ -129,10 +165,14 @@ public class Game {
             out.println("RULE: Only One Player Left");
             return true;
         }
-
         return Boolean.TRUE.equals(this.allPlayersStick());
     }
 
+    /**
+     * Get game rules string.
+     *
+     * @return the string
+     */
     public String getGameRules(){
         return "If the player's total is less than 17, they \"hit\" (i.e. get dealt" +
                 "another card from the top of the deck). \n" +
@@ -141,6 +181,11 @@ public class Game {
                 "ejected from the game) \n";
     }
 
+    /**
+     * Sets up number of players.
+     *
+     * @return the up number of players
+     */
     public int setUpNumberOfPlayers() {
             out.print("Enter number of Players: ");
             String numPlayers = scanner.nextLine();
@@ -149,7 +194,6 @@ public class Game {
                 out.println("No Input was Entered! Default Number of Players: 3");
                 return 3;
             }
-
             while (Integer.parseInt(numPlayers)  <= 1 || Integer.parseInt(numPlayers ) >= 6) {
                 out.println("Wrong Input! Enter a number greater than 0 and lesser than 6");
                 out.print("Enter number of Players: ");
@@ -158,11 +202,21 @@ public class Game {
             return Integer.parseInt(numPlayers);
     }
 
+    /**
+     * Add players to game.
+     *
+     * @throws PlayerAlreadyRegisteredException the player already registered exception
+     */
     public void addPlayersToGame() throws PlayerAlreadyRegisteredException {
         List<String> names = this.takePlayerNames();// take player names
         this.registerPlayers(names);  // register players
     }
 
+    /**
+     * Initialize game.
+     *
+     * @throws PlayerAlreadyRegisteredException the player already registered exception
+     */
     public void initializeGame() throws PlayerAlreadyRegisteredException {
         out.println("\n ------ WELCOME TO THE BLACK JACK GAME ------\n");
         out.println("Here are the game rules: ");
@@ -174,11 +228,19 @@ public class Game {
         out.println("Please wait for Game to Setup");
     }
 
+    /**
+     * Find winner player.
+     *
+     * @return the player
+     */
     public Player findWinner() {
         Optional<Player> player = Optional.of(players.stream().max(Comparator.comparing(Player::getPoints))).get();
         return player.orElseGet(() -> new Player("#####", "No Winner"));
     }
 
+    /**
+     * Choose strategy.
+     */
     public void chooseStrategy(){
         out.println("\nThe List of Strategies Available are: always-hit, always-stick, normal");
         int index = 1;
@@ -194,17 +256,6 @@ public class Game {
                 }
             }
             p.assignTurnsByStrategy(strategy);
-;        }
-    }
-
-
-
-    // mrthod alwasysHit
-    //method stick17
-    /// method for calcuaterisk
-
-    public void pickStrategy(String strategy){
-        // if strategy == alwaysHit -> call alwaysHitMethod -. calculate TurnsDifferently in player class
-        // if stratgy = stick17 -> call stick17Method - player calculate turns differently in player
+        }
     }
 }
