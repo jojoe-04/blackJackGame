@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String name;
-    private String playerId;
+    private final String name;
+    private final String playerId;
     private int points;
-    private List<Card> hand;
+    private final List<Card> hand;
     private String turn;
 
     public Player(String playerId, String name) {
         this.playerId = playerId;
         this.name = name;
         this.points = 0;
-        this.hand = new ArrayList<Card>();
+        this.hand = new ArrayList<>();
         this.turn = "";
     }
 
@@ -24,9 +24,6 @@ public class Player {
         this.hand.add(card);
     }
 
-    public String getPlayerId() {
-        return playerId;
-    }
 
     public int getPoints() {
        this.caculatePoints();
@@ -37,17 +34,17 @@ public class Player {
         return hand;
     }
 
+    //TODO refactor
     public void calculateTurns() {
-        if(this.getPoints() < 17)
-            turn = "hit";
+        if(this.getPoints() < 17)  turn = "hit";
 
-        if(this.getPoints() >= 17)
-            turn = "stick";
+        if(this.getPoints() >= 17)  turn = "stick";
 
-        if(this.getPoints() > 21)
-            turn = "bust";
+        if(this.getPoints() > 21) turn = "bust";
+
     }
 
+    //TODO refactor
     public String getTurn() {
         this.calculateTurns();
         return turn;
@@ -57,7 +54,7 @@ public class Player {
         return name;
     }
 
-    // refactor to use stream
+    //TODO refactor to use streams
     public void caculatePoints(){
         this.points = 0;
         for(Card c : this.hand){

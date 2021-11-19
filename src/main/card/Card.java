@@ -2,20 +2,39 @@ package card;
 
 import java.util.Objects;
 
+/**
+ * The type Card.
+ */
 public class Card implements Comparable<Card> {
 
-    private Suit suit;
-    private CardValue cardValue;
+    private final Suit suit;
+    private final CardValue cardValue;
 
+    /**
+     * Instantiates a new Card.
+     *
+     * @param suit      the suit
+     * @param cardValue the card value
+     */
     public Card(Suit suit, CardValue cardValue) {
         this.suit = suit;
         this.cardValue = cardValue;
     }
 
+    /**
+     * Gets suit.
+     *
+     * @return the suit
+     */
     public Suit getSuit() {
         return suit;
     }
 
+    /**
+     * Gets card value.
+     *
+     * @return the card value
+     */
     public CardValue getCardValue() {
         return cardValue;
     }
@@ -28,25 +47,25 @@ public class Card implements Comparable<Card> {
         return getSuit() == card.getSuit() && getCardValue() == card.getCardValue();
     }
 
+    /**
+     * Overridden Hashcode Method
+     * @return  hashcode for two objects
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getSuit(), getCardValue());
     }
 
     /**
-     * Compares value of Two Cards
-     * @param other Card Object
-     * @return comparison of cards
+     * Compare to Card Objects
+     * @param other - another card to compare
+     * @return compareTo value
      */
     @Override
     public int compareTo(Card other) {
         return this.cardValue.compareTo(other.cardValue);
     }
 
-    /**
-     * ToString Method of Card Class
-     * @return
-     */
     @Override
     public String toString() {
         return "Card{" +

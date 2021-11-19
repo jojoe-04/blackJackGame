@@ -3,18 +3,19 @@ package card;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static java.lang.System.*;
+
 /**
- * Deck Class
- * Deck[collection] of Cards[object] of 4 Suits[object]
+ * The type Deck.
  */
 public class Deck {
     private ArrayList<Card> cards;
 
     /**
-     * Constructor to initialize a Deck object with cards
+     * Instantiates a new Deck.
      */
     public Deck() {
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
         for (Suit s : Suit.values()) { // loop through enums and insert cards in ArrayList<cards>
             for (CardValue v: CardValue.values()) {
                 this.cards.add(new Card(s,v));
@@ -22,18 +23,28 @@ public class Deck {
         }
     }
 
-    //
+    /**
+     * Shuffle.
+     */
     public void shuffle(){
         Collections.shuffle(this.cards);
     }
 
 
+    /**
+     * Print cards.
+     */
     public void printCards() {
         for(Card card : cards) {
-           System.out.println(card) ;
+           out.println(card) ;
         }
     }
 
+    /**
+     * Pop card.
+     *
+     * @return the card
+     */
     public Card pop(){
         Card last = cards.get(cards.size() - 1);
         cards.remove(cards.size() - 1);
