@@ -150,7 +150,7 @@ public class Game {
                 return 3;
             }
 
-            while (Integer.parseInt(numPlayers)  <= 0 || Integer.parseInt(numPlayers ) >= 6) {
+            while (Integer.parseInt(numPlayers)  <= 1 || Integer.parseInt(numPlayers ) >= 6) {
                 out.println("Wrong Input! Enter a number greater than 0 and lesser than 6");
                 out.print("Enter number of Players: ");
                 numPlayers = scanner.next();
@@ -170,6 +170,8 @@ public class Game {
 
         configurePlayers(setUpNumberOfPlayers());   // configure number of players playing game
         addPlayersToGame(); // Get player names and Add players to game
+        chooseStrategy();
+        out.println("Please wait for Game to Setup");
     }
 
     public Player findWinner() {
@@ -177,9 +179,29 @@ public class Game {
         return player.orElseGet(() -> new Player("#####", "No Winner"));
     }
 
+    public void chooseStrategy(){
+        out.println("\nThe List of Strategies Available are: always-hit, always-stick, normal");
+        int index = 1;
+        for (Player p : players){
+            out.print("Enter Player" + (index++) + " strategy: ");
+            String strategy = scanner.next();
+            while(true) {
+                if(Objects.equals(strategy, "normal") || Objects.equals(strategy, "always-hit") || Objects.equals(strategy, "always-stick")) break;
+                else {
+                    out.println("This Strategy Doest Not Exist, Enter either of [ always-hit, always-stick, normal ]");
+                    out.print("Enter another strategy: ");
+                    strategy = scanner.next();
+                }
+            }
+            p.assignTurnsByStrategy(strategy);
+;        }
+    }
+
+
+
     // mrthod alwasysHit
     //method stick17
-    // method for calcuaterisk
+    /// method for calcuaterisk
 
     public void pickStrategy(String strategy){
         // if strategy == alwaysHit -> call alwaysHitMethod -. calculate TurnsDifferently in player class

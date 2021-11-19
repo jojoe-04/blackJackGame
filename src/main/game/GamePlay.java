@@ -43,13 +43,12 @@ public  class GamePlay {
         while("continue".equals(gameStatus)){
 
             TimeUnit.SECONDS.sleep(2);
-
             for (Player player : blackjack.getPlayers()) {
                 if (Objects.equals(player.getTurn(), "bust")) {
                     blackjack.ejectPlayer(player);
                     out.println("Ejected from Game Player: " + player.getName());
                 }
-                if (Objects.equals(player.getTurn(), "hit")) {
+                else if (Objects.equals(player.getTurn(), "hit")) {
                     out.println(player.getName() + ": has a HIT on turn, a new card from deck will be popped");
                     TimeUnit.SECONDS.sleep(2);
                     player.addToHand(deck.pop());
@@ -94,21 +93,19 @@ public  class GamePlay {
     }
 
     public static void logGamePlay() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(1);
         logCards();
 
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(1);
         logPoints();
 
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(1);
         logTurns();
     }
 
     public  static void startGamePlay() throws PlayerAlreadyRegisteredException, InterruptedException {
         blackjack.initializeGame(); // initialize the Game
-        TimeUnit.SECONDS.sleep(2);
 
-        out.println("\nPlease wait for Game to Setup");
         TimeUnit.SECONDS.sleep(2);
         logPlayers(); // get current players in game
 

@@ -4,6 +4,7 @@ import card.Card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The type Player.
@@ -14,6 +15,7 @@ public class Player {
     private int points;
     private final List<Card> hand;
     private String turn;
+    private String strategy = "normal";
     /**
      * Instantiates a new Player.
      * @param playerId the player id
@@ -69,12 +71,37 @@ public class Player {
         if(this.getPoints() > 21) turn = "bust";
     }
 
+    public void calculateAlwaysHit() {
+        if(this.getPoints() < 21) turn = "hit";
+        if(this.getPoints() > 21) turn = "bust";
+    }
+
+    public void calculateAlwaysStick() {
+        turn = "stick";
+    }
+
+    public void assignTurnsByStrategy(String action) {
+        if(Objects.equals(action, "normal")){
+            this.strategy = "normal";
+            calculateTurns();
+        }
+        if (Objects.equals(action, "always-stick")) {
+            this.strategy = "always-stick";
+            calculateAlwaysStick();
+        }
+
+        if (Objects.equals(action, "always-hit")) {
+            this.strategy = "always-hit";
+            calculateAlwaysHit();
+        }
+    }
+
     /**
      * Calculates turns and return player's turn
      * @return turn
      */
     public String getTurn() {
-        this.calculateTurns();
+        assignTurnsByStrategy(strategy);
         return turn;
     }
 
