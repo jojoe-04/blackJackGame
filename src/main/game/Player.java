@@ -14,7 +14,6 @@ public class Player {
     private int points;
     private final List<Card> hand;
     private String turn;
-
     /**
      * Instantiates a new Player.
      * @param playerId the player id

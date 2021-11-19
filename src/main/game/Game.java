@@ -176,4 +176,13 @@ public class Game {
         Optional<Player> player = Optional.of(players.stream().max(Comparator.comparing(Player::getPoints))).get();
         return player.orElseGet(() -> new Player("#####", "No Winner"));
     }
+
+    // mrthod alwasysHit
+    //method stick17
+    // method for calcuaterisk
+
+    public void pickStrategy(String strategy){
+        // if strategy == alwaysHit -> call alwaysHitMethod -. calculate TurnsDifferently in player class
+        // if stratgy = stick17 -> call stick17Method - player calculate turns differently in player
+    }
 }
