@@ -27,7 +27,7 @@ public class Player {
 
     public int getPoints() {
        this.caculatePoints();
-        return points;
+       return points;
     }
 
     public List<Card> getHand() {
