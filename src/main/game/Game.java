@@ -54,11 +54,22 @@ public class Game {
     }
 
     //TODO refactor to use streamsss
+//    public void printPlayers() throws InterruptedException {
+//        for(Player player : players){
+//            TimeUnit.SECONDS.sleep(3);
+//            out.println(player);
+//        }
+//    }
+
     public void printPlayers() throws InterruptedException {
-        for(Player player : players){
-            TimeUnit.SECONDS.sleep(3);
-            out.println(player);
-        }
+        players.forEach(player -> {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+                out.println(player);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     // TODO REFACTOR
@@ -75,24 +86,36 @@ public class Game {
     }
 
     //TODO refactor to use streams
+//    public void printPlayerCards(){
+//        for(Player player : players){
+//            out.println(player.getName() + ": "+ player.getHand());
+//        }
+//    }
+
     public void printPlayerCards(){
-        for(Player player : players){
-            out.println(player.getName() + ": "+ player.getHand());
-        }
+        players.forEach(player ->  out.println(player.getName() + ": "+ player.getHand()));
     }
 
     //TODO refactor to use streams
+//    public void printTotalPointsPerPlayer(){
+//        for(Player player : players){
+//            out.println(player.getName() + ": "+ player.getPoints());
+//        }
+//    }
+
     public void printTotalPointsPerPlayer(){
-        for(Player player : players){
-            out.println(player.getName() + ": "+ player.getPoints());
-        }
+        players.forEach(player -> out.println(player.getName() + ": "+ player.getPoints()));
     }
 
     //TODO refactor to use streams
+//    public void printTurnsPerPlayer(){
+//        for(Player player : players){
+//            out.println(player.getName() + ": " + player.getTurn());
+//        }
+//    }
+
     public void printTurnsPerPlayer(){
-        for(Player player : players){
-            out.println(player.getName() + ": " + player.getTurn());
-        }
+        players.forEach(player -> out.println(player.getName() + ": " + player.getTurn()));
     }
 
     //TODO refactor
@@ -103,6 +126,7 @@ public class Game {
         out.println("RULE: All Players Stick in This Round");
         return true;
     }
+
 
     //TODO refactor
     public Boolean playerHit21(){
