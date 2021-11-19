@@ -1,0 +1,8 @@
+
+    //TODO refactor to use streams
+    public void caculatePoints(){
+        this.points = 0;
+        for(Card c : this.hand){
+            this.points += c.getCardValue().getValue();
+        }
+    }
