@@ -2,130 +2,126 @@ package game;
 
 import card.Deck;
 
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.System.*;
 
-public class GamePlay {
+public  class GamePlay {
     private static final Deck deck = new Deck();
     private static int roundValue = 0;
-    private static final Game blackjack1 = new Game();
+    private static final Game blackjack = new Game();
 
-    //TODO refactor (naming convention)
-    public static String aRound() throws InterruptedException {
+    private GamePlay() {
+    }
+
+    public static String playRound() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2);
         out.println("-------> GAME ROUND " + roundValue);
 
-        //TODO refactor
-        if(Boolean.TRUE.equals(blackjack1.isGameOver())) {  //Check if Game is Over First
+        if(Boolean.TRUE.equals(blackjack.isGameOver())) {
             out.println(" ");
             out.println("------------ GAME OVER ----------\n\n");
 
-            // TODO seperate log logic
-            TimeUnit.SECONDS.sleep(3);
-            out.println("Players Left in the Game: ");
-            blackjack1.printPlayers();
+            TimeUnit.SECONDS.sleep(2);
+            logPlayers();
+            TimeUnit.SECONDS.sleep(2);
+            logWinner();
 
-            // TODO seperate log logic
-            TimeUnit.SECONDS.sleep(3);
-            out.println("\nWinner of Game is: ");
-            out.println(blackjack1.findWinner());
             return "over";
         }
 
-        out.println(
-                "{log} > game continued.....\n\n"
-        );
-
+        out.println("\n{log} < game continued.....>\n\n");
         roundValue++;
         return "continue";
-
     }
 
-    //TODO refactor
     public static void continueGamePlay() throws InterruptedException {
-        String gameStatus = aRound();
-
-        if("over".equals(gameStatus)) return;
+        String gameStatus = playRound();
+        if("over".equals(gameStatus)) return; // don't continue when game is not over
 
         while("continue".equals(gameStatus)){
+
             TimeUnit.SECONDS.sleep(2);
 
-            //TODO refactor to eahanced for Loop
-            for(Iterator<Player> it = blackjack1.getPlayers().iterator(); it.hasNext(); ){
-                Player player = it.next();
-
-                // TODO throwing exception, must be handled
-                if(Objects.equals(player.getTurn(), "bust")) {
-                        blackjack1.ejectPlayer(player);
-                        out.println("Ejected from Game Player: " + player.getName());
+            for (Player player : blackjack.getPlayers()) {
+                if (Objects.equals(player.getTurn(), "bust")) {
+                    blackjack.ejectPlayer(player);
+                    out.println("Ejected from Game Player: " + player.getName());
                 }
-                if(Objects.equals(player.getTurn(), "hit")){
-                        out.println(player.getName() + ": has a HIT on turn, a new card from deck will be popped");
-                        TimeUnit.SECONDS.sleep(3);
-                        player.addToHand(deck.pop());
-                        out.println("New Card Handed for Player: " + player.getName());
+                if (Objects.equals(player.getTurn(), "hit")) {
+                    out.println(player.getName() + ": has a HIT on turn, a new card from deck will be popped");
+                    TimeUnit.SECONDS.sleep(2);
+                    player.addToHand(deck.pop());
+                    out.println("New Card Handed for Player: " + player.getName());
                 }
             }
-            processGamePlay();
+            logGamePlay();
             TimeUnit.SECONDS.sleep(1);
-            gameStatus = aRound();
+            gameStatus = playRound();
         }
     }
 
-    //TODO refactor ( take parameter of cards & use streams )
-    public static void handTwoCards(Player player){
-
-        player.addToHand(deck.pop());
-        player.addToHand(deck.pop());
+    public static void handCards(Player player, int numOfCards){
+        for(int i = 0; i < numOfCards; i++){
+            player.addToHand(deck.pop());
+        }
     }
 
-    //TODO refactor
-    public static void processGamePlay() throws InterruptedException {
-        out.println(" ");
-        out.println("Take a Look at your cards");
-        blackjack1.printPlayerCards();
-
-        //TODO seperate logging
-        TimeUnit.SECONDS.sleep(5);
-        out.println(" ");
-        out.println("These are your card totals");
-        blackjack1.printTotalPointsPerPlayer();
-
-        TimeUnit.SECONDS.sleep(3);
-        out.println(" ");
-        out.println("These are your turns");
-        blackjack1.printTurnsPerPlayer();
-        TimeUnit.SECONDS.sleep(3);
+    private static void logWinner() {
+        out.println("\nWinner of Game is: ");
+        out.println(blackjack.findWinner());
     }
 
-    //TODO refactor
-    public static void startGamePlay() throws PlayerAlreadyRegisteredException, InterruptedException {
+    private static void logPlayers() throws InterruptedException {
+        out.println("\nCurrent Players In Game: ");
+        blackjack.printPlayers();
+    }
 
-        blackjack1.initializeGame(); // initialize the Game
+    private static void logPoints(){
+        out.println("\nThese are your card totals");
+        blackjack.printTotalPointsPerPlayer();
+    }
+
+    private static void logCards(){
+        out.println("\nTake a Look at your cards");
+        blackjack.printPlayerCards();
+    }
+
+    private static void logTurns(){
+        out.println("\nThese are your turns");
+        blackjack.printTurnsPerPlayer();
+    }
+
+    public static void logGamePlay() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        logCards();
+
+        TimeUnit.SECONDS.sleep(3);
+        logPoints();
+
+        TimeUnit.SECONDS.sleep(3);
+        logTurns();
+    }
+
+    public  static void startGamePlay() throws PlayerAlreadyRegisteredException, InterruptedException {
+        blackjack.initializeGame(); // initialize the Game
+        TimeUnit.SECONDS.sleep(2);
+
+        out.println("\nPlease wait for Game to Setup");
+        TimeUnit.SECONDS.sleep(2);
+        logPlayers(); // get current players in game
+
+        TimeUnit.SECONDS.sleep(2);
         deck.shuffle(); // shuffle Deck
 
-        for(Player player: blackjack1.getPlayers()) { // Hand two Cards at beginning
-            handTwoCards(player);
+        for(Player player: blackjack.getPlayers()) {
+            handCards(player, 2); // hand two Cards at beginning to each player
         }
-        out.println("{log} > Two Cards Have been Added to Each Player...");
+        out.println("{log} > ...two Cards Have been Added to Each Player...");
 
         TimeUnit.SECONDS.sleep(3);
-        processGamePlay();
-
-
-    }
-
-
-    public static void main(String[] args) throws PlayerAlreadyRegisteredException, InterruptedException {
-        startGamePlay();
-        TimeUnit.SECONDS.sleep(3);
-        continueGamePlay();
-
-
-
+        logGamePlay();
     }
 
 }

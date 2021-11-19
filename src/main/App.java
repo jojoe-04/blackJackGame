@@ -3,26 +3,16 @@ import card.CardValue;
 import card.Deck;
 import card.Suit;
 import game.Game;
+import game.GamePlay;
 import game.PlayerAlreadyRegisteredException;
 
 public class App {
 
-    public static void main(String[] args) throws PlayerAlreadyRegisteredException {
-        System.out.println("Black Jack Game");
-/*
-        Card card = new Card(Suit.Heart, CardValue.EIGHT);
-        Deck deck = new Deck();
-        deck.printCards();
+    public static void main(String[] args) throws PlayerAlreadyRegisteredException, InterruptedException {
+        GamePlay.startGamePlay();
 
-        System.out.println(" ");
-        deck.shuffle();
-        deck.printCards();*/
 
-    /*    Game game = new Game();
-        game.initializeGame();
-        game.printPlayerCards();*/
-        Card card = new Card(Suit.Heart, CardValue.EIGHT);
-        System.out.println(card.getCardValue().getValue());
-        //System.out.println(card.getPoint());
+
+
     }
 }

@@ -56,7 +56,7 @@ public class Game {
     //TODO refactor to use streamsss
     public void printPlayers() throws InterruptedException {
         for (Player player : players) {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
             out.println(player);
         }
     }
@@ -141,31 +141,29 @@ public class Game {
                 "ejected from the game) \n";
     }
 
-    //TODO refactor
-    public void initializeGame() throws PlayerAlreadyRegisteredException, InterruptedException {
+    public int setUpNumberOfPlayers() {
+            out.print("Enter number of Players: ");
+            int numPlayers = scanner.nextInt();
+            while (numPlayers  <= 0 || numPlayers >= 6) {
+                out.println("Wrong Input! Enter a number greater than 0 and lesser than 6");
+                out.print("Enter number of Players: ");
+                numPlayers = scanner.nextInt();
+            }
+            return numPlayers;
+    }
+
+    public void addPlayersToGame() throws PlayerAlreadyRegisteredException {
+        List<String> names = this.takePlayerNames();// take player names
+        this.registerPlayers(names);  // register players
+    }
+
+    public void initializeGame() throws PlayerAlreadyRegisteredException {
         out.println("\n ------ WELCOME TO THE BLACK JACK GAME ------\n");
-        out.println("Here are the game rules -> ");
+        out.println("Here are the game rules: ");
         out.println(getGameRules());
 
-
-        //TODO refactor into method and do error handling
-        TimeUnit.SECONDS.sleep(3);
-        out.print("Enter number of Players: ");
-
-        int numPlayers = scanner.nextInt();
-        out.println("Please wait for Game to Setup");
-        TimeUnit.SECONDS.sleep(3);
-
-        configurePlayers(numPlayers);   // configure number of players playing game
-
-        List<String> names = this.takePlayerNames();   // take player names
-
-        this.registerPlayers(names);  // register players
-        out.println(" ");
-        out.println("The List of players playing the game are : ");
-        this.printPlayers();
-        TimeUnit.SECONDS.sleep(3);
-
+        configurePlayers(setUpNumberOfPlayers());   // configure number of players playing game
+        addPlayersToGame(); // Get player names and Add players to game
     }
 
     public Player findWinner() {
